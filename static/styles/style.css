@@ -328,6 +328,10 @@ a {
   color: var(--color-light);
 }
 
+.header__search input::placeholder {
+  color: var(--color-light-gray);
+}
+
 @media screen and (max-width: 800px) {
   .header__search input {
     width: 20rem;

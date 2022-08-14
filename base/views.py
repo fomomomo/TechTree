@@ -77,9 +77,10 @@ def home(request):
     room_count = rooms.count()
     room_messages = Message.objects.filter(
         Q(room__topic__name__icontains=q))[0:3]
+    leaf_counts = sum([len(topic.room_set.all()) for topic in Topic.objects.all()])
 
     context = {'rooms': rooms, 'topics': topics,
-               'room_count': room_count, 'room_messages': room_messages}
+               'room_count': room_count, 'room_messages': room_messages, 'leaf_counts': leaf_counts}
     return render(request, 'base/home.html', context)
 
 
@@ -196,7 +197,9 @@ def updateUser(request):
 def topicsPage(request):
     q = request.GET.get('q') if request.GET.get('q') != None else ''
     topics = Topic.objects.filter(name__icontains=q)
-    return render(request, 'base/topics.html', {'topics': topics})
+    leaf_counts = sum([len(topic.room_set.all()) for topic in topics])
+
+    return render(request, 'base/topics.html', {'topics': topics, 'leaf_counts':leaf_counts})
 
 
 def activityPage(request):
