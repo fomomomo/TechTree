@@ -1186,10 +1186,7 @@ a {
 =>  Chart
 ================================*/
 
-.chart-container {
-  height: 400px;
-  width: 400px;
-}
+
 
 /* .poll__topRight {
   padding: 0.3rem 1.2rem;
@@ -1226,3 +1223,40 @@ a {
     display: flex;
     justify-content: space-between;
 }
+
+.question {
+
+  margin: 2rem 2rem 0rem 2rem;
+  padding: 2rem;
+  background: #093a3a;
+  border-radius: 2rem;
+}
+
+.question h3 {
+  display: block;
+  color: var(--color-main);
+  font-size: 3rem;
+}
+
+.graph {
+  height: 300px;
+  width: 100%;
+  padding: 2rem;
+  margin-bottom: 4rem;
+  margin: 2rem;
+  background: var(--color-main);
+  color: var(--color-dark);
+  
+}
+
+.graph-box {
+  padding-bottom: 4rem;
+  display: flex;
+
+}
+
+#myChart {
+  display: flex;
+}
+
+

@@ -211,19 +211,22 @@ def activityPage(request):
 def poll(request, pk):
     
     room = Room.objects.get(id=pk)
+    time_left = 0
     try:
         poll = Poll.objects.get(room=room)
         print(poll.question)
         options = poll.option_set.all()
         print(poll.completed)
-        if poll.time_end <= datetime.now().replace(tzinfo=timezone.utc) and poll.completed==False:
-            
-            poll.completed = True
-            poll.save()
+        if poll.time_end <= datetime.now().replace(tzinfo=timezone.utc):
+            if(poll.completed==False):
+                poll.completed = True
+                poll.save()
+        else:
+            time_left = poll.time_end - datetime.now().replace(tzinfo=timezone.utc)
     except:
         poll = {}
         options = {}
-    return render(request, 'base/poll.html', {'poll': poll, 'options': options})
+    return render(request, 'base/poll.html', {'poll': poll, 'options': options, 'time_left': time_left})
 
 @login_required(login_url='login')
 def createPoll(request, pk):
