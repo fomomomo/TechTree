@@ -1,0 +1,26 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<main>
+    <div>Poll for {{request.user.name}}</div>
+    <dir>Poll completed {{poll.completed}}</dir>
+    <div>Question: {{poll.question}}</div>
+    {% for option in options %}
+    <div>
+        <div>{{option.text}}</div>
+        <div>{{option.user_selections.count}}</div>
+    </div>
+    <dir>
+        
+    </dir>
+    {% endfor %}
+    <div class="chart-container">
+        <canvas id="myChart"></canvas>
+    </div>
+
+</main>
+
+
+
+
+{% endblock content %}

@@ -914,7 +914,8 @@ a {
 ================================*/
 
 .room,
-.participants {
+.participants,
+.poll {
   background: var(--color-dark);
   max-height: 87.5vh;
   border-radius: 0.7rem;
@@ -933,7 +934,8 @@ a {
 }
 
 .room__top,
-.participants__top {
+.participants__top,
+.poll_top {
   background: var(--color-dark-light);
   display: flex;
   justify-content: space-between;
@@ -943,7 +945,8 @@ a {
 }
 
 .room__top svg,
-.thread__top svg {
+.thread__top svg,
+.poll__group svg {
   width: 1.6rem;
   height: 1.6rem;
   fill: var(--color-light);
@@ -1177,4 +1180,49 @@ a {
   font-weight: 500;
   color: var(--color-main);
   font-weight: 1.4rem;
+}
+
+/*==============================
+=>  Chart
+================================*/
+
+.chart-container {
+  height: 400px;
+  width: 400px;
+}
+
+/* .poll__topRight {
+  padding: 0.3rem 1.2rem;
+  background-color: var(--color-main);
+  color: var(--color-dark);
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.4rem;
+  border-radius: 0;
+  margin: 1rem 0;
+} */
+
+.poll__topRight {
+  display: flex;
+  column-gap: 1em;
+  background-color: var(--color-main);
+  color: var(--color-dark);
+  padding: 0.5rem 1rem;
+  font-size: 1.4rem;
+  border-radius: 0.8rem;
+  margin: 1rem 0;
+}
+
+.poll__topRight svg {
+  fill: var(--color-dark);
+  
+}
+
+.poll__topRight a {
+  color: var(--color-dark);
+}
+
+.poll__group {
+    display: flex;
+    justify-content: space-between;
 }

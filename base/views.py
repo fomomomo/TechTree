@@ -4,8 +4,9 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout
-from .models import Room, Topic, Message, User
-from .forms import RoomForm, UserForm, MyUserCreationForm
+from .models import Room, Topic, Message, User, Poll, Option
+from .forms import RoomForm, UserForm, MyUserCreationForm, PollForm, OptionForm
+from datetime import datetime, timezone
 
 # Create your views here.
 
@@ -88,7 +89,7 @@ def room(request, pk):
     room = Room.objects.get(id=pk)
     room_messages = room.message_set.all()
     participants = room.participants.all()
-
+    print(room.has_poll)
     if request.method == 'POST':
         message = Message.objects.create(
             user=request.user,
@@ -205,3 +206,54 @@ def topicsPage(request):
 def activityPage(request):
     room_messages = Message.objects.all()
     return render(request, 'base/activity.html', {'room_messages': room_messages})
+
+
+def poll(request, pk):
+    
+    room = Room.objects.get(id=pk)
+    try:
+        poll = Poll.objects.get(room=room)
+        print(poll.question)
+        options = poll.option_set.all()
+        print(poll.completed)
+        if poll.time_end <= datetime.now().replace(tzinfo=timezone.utc) and poll.completed==False:
+            
+            poll.completed = True
+            poll.save()
+    except:
+        poll = {}
+        options = {}
+    return render(request, 'base/poll.html', {'poll': poll, 'options': options})
+
+@login_required(login_url='login')
+def createPoll(request, pk):
+    form = PollForm()
+    room = Room.objects.get(id=pk)
+    if request.method == 'POST':
+        Poll.objects.create(
+            host=request.user,
+            room=room,
+            question=request.POST.get('question'),
+            time_end=request.POST.get('time_end'),
+        )
+        room.has_poll = True
+        room.save()
+        return redirect('room', pk=room.id)
+
+    context = {'form': form}
+    return render(request, 'base/poll_form.html', context)
+
+# @login_required(login_url='login')
+# def createOption(request, pk):
+#     form = OptionForm()
+#     room = Room.objects.get(id=pk)
+#     Poll = Poll.objects.get(room=room)
+#     if request.method == 'POST':
+#         Option.objects.create(
+#             question=poll,
+#             text=request.POST.get('text')
+#         )
+#         return redirect('create-poll', pk=poll.id)
+
+#     context = {'form': form}
+#     return render(request, 'base/poll_form.html', context)

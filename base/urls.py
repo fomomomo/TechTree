@@ -19,4 +19,8 @@ urlpatterns = [
 
     path('topics/', views.topicsPage, name="topics"),
     path('activity/', views.activityPage, name="activity"),
+
+    path('poll/<str:pk>/', views.poll, name="poll"),
+    path('create-poll/<str:pk>', views.createPoll, name="create-poll"),
+    # path('room/<str:pk>/create-option', views.createPoll, name="create-option"),
 ]
