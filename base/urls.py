@@ -22,5 +22,5 @@ urlpatterns = [
 
     path('poll/<str:pk>/', views.poll, name="poll"),
     path('create-poll/<str:pk>', views.createPoll, name="create-poll"),
-    # path('room/<str:pk>/create-option', views.createPoll, name="create-option"),
+    path('create-option/<str:pk>', views.createOption, name="create-option"),
 ]

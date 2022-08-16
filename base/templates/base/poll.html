@@ -21,8 +21,10 @@
             <div class="profile__pollRight">
                 {% if poll.completed %}
                 <h3>Poll Ended {{poll.time_end|timesince}} ago</h3>
+
                 {% else %}
                 <a href="#">Vote Now</a>
+                <h3>Poll Active Till {{poll.time_end}}</h3>
                 {% endif %}
             </div>
 
@@ -32,6 +34,9 @@
 
         <div class="question">
             <h3>{{poll.question}}</h3>
+            {% if request.user == poll.room.host %}
+                <a href="{% url 'create-option' poll.room.id %}">Add Options</a>
+            {% endif %}
         </div>
         <div class="graph-box">
             <div class="wrapper graph">

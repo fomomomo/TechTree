@@ -20,7 +20,7 @@
               ></path>
             </svg>
           </a>
-          <h3>Create Tech Leaf Poll</h3>
+          <h3>Add Option to your poll: {{poll.question}}</h3>
         </div>
       </div>
       <div class="layout__body">
@@ -28,13 +28,8 @@
           {% csrf_token %}
 
           <div class="form__group">
-            <label for="question">Ask your question here</label>
-            {{form.question}}
-          </div>
-
-          <div class="form__group">
-            <label for="time_end">Set the Poll Completion Date and Time</label>
-            <input required id="endtime" name="time_end" type="datetime-local"/>
+            <label for="question">Type your Option</label>
+            {{form.text}}
           </div>
 
           <!-- <div class="form__group">

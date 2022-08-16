@@ -1234,6 +1234,8 @@ a {
   padding: 2rem;
   background: #093a3a;
   border-radius: 2rem;
+  display: flex;
+  justify-content: space-between;
 }
 
 .question h3 {
@@ -1301,4 +1303,17 @@ a {
   text-transform: uppercase;
   font-weight: 500;
   color: var(--color-dark);
+}
+
+.profile__poll a {
+  text-transform: uppercase;
+  font-weight: 800;
+  color: var(--color-bg);
+}
+
+.question a {
+  text-transform: uppercase;
+  font-weight: 800;
+  color: var(--color-main);
+  padding: 1rem;
 }

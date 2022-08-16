@@ -253,17 +253,17 @@ def createPoll(request, pk):
     context = {'form': form}
     return render(request, 'base/poll_form.html', context)
 
-# @login_required(login_url='login')
-# def createOption(request, pk):
-#     form = OptionForm()
-#     room = Room.objects.get(id=pk)
-#     Poll = Poll.objects.get(room=room)
-#     if request.method == 'POST':
-#         Option.objects.create(
-#             question=poll,
-#             text=request.POST.get('text')
-#         )
-#         return redirect('create-poll', pk=poll.id)
+@login_required(login_url='login')
+def createOption(request, pk):
+    form = OptionForm()
+    room = Room.objects.get(id=pk)
+    poll = Poll.objects.get(room=room)
+    if request.method == 'POST':
+        Option.objects.create(
+            question=poll,
+            text=request.POST.get('text')
+        )
+        return redirect('poll', pk=room.id)
 
-#     context = {'form': form}
-#     return render(request, 'base/poll_form.html', context)
+    context = {'form': form, 'poll': poll}
+    return render(request, 'base/poll_form.html', context)
