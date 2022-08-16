@@ -2,17 +2,47 @@
 
 {% block content %}
     <div class="poll">
+        <div class="">
+            Profile section
+        </div>
+            
         <div class="profile__poll">
+            <div class="profile__pollLeft">
+                <a href="{% url 'room' poll.room.id %}">
+                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+                      <title>arrow-left</title>
+                      <path
+                        d="M13.723 2.286l-13.723 13.714 13.719 13.714 1.616-1.611-10.96-10.96h27.625v-2.286h-27.625l10.965-10.965-1.616-1.607z">
+                      </path>
+                    </svg>
+                  </a>
+                <h3>{{poll.room.name}}</h3>
+            </div>
+            <div class="profile__pollRight">
+                {% if poll.completed %}
+                <h3>Poll Ended {{poll.time_end|timesince}} ago</h3>
+                {% else %}
+                <a href="#">Vote Now</a>
+                {% endif %}
+            </div>
 
+            
+            
         </div>
 
         <div class="question">
-
+            <h3>{{poll.question}}</h3>
         </div>
         <div class="graph-box">
-            <div class="graph">
-                <canvas id="myChart" width="400" height="400"></canvas>
+            <div class="wrapper graph">
+                <canvas id="myChart" data-room_id={{poll.room.id}} data-vote_counts='{{vote_counts}}' data-labels='{{labels}}' width="400" height="400"></canvas>
             </div>
+            <div class="chart-type">
+                <button onclick="toggleType()" class="switch-btn btn">
+                    Swtich Chart
+                </button>
+            </div>
+
         </div>
         
 
@@ -21,42 +51,71 @@
 
 
 <script>
-    console.log('HI')
-    const ctx = document.getElementById('myChart').getContext('2d');
-    const myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-            datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
+
+    
+    
+    
+    
+    let getPoll = async (type) => {
+        var dataChart = document.getElementById('myChart')
+        var room_id = dataChart.dataset.room_id
+        console.log(room_id)
+        let response = await fetch(`http://127.0.0.1:8000/api/polls/${room_id}`)
+        let options = await response.json()
+        
+        var labels = []
+        var votes = []
+        for (let i = 0; options.length > i; i++) {
+            // let option = option[i]
+            labels.push(options[i].text)
+            votes.push(options[i].user_selections.length)
+        }
+        console.log(labels)
+        console.log(votes)
+        const ctx = document.getElementById('myChart').getContext('2d');
+        const myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: '# of Votes',
+                    data: votes,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
                 }
             }
-        }
-    });
+        });
+    }
+    getPoll();
+    console.log(myChart)
+    // function myFunction() {
+    //     var element = document.getElementById("myDIV");
+    //     element.classList.toggle("mystyle");
+    // }
+
+    
     </script>
 
 {% endblock content %}

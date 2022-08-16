@@ -914,8 +914,7 @@ a {
 ================================*/
 
 .room,
-.participants,
-.poll {
+.participants {
   background: var(--color-dark);
   max-height: 87.5vh;
   border-radius: 0.7rem;
@@ -1224,39 +1223,82 @@ a {
     justify-content: space-between;
 }
 
+.poll {
+  background: #b2bdbd;
+  height: 110rem;
+}
+
 .question {
 
-  margin: 2rem 2rem 0rem 2rem;
+  margin: 2rem;
   padding: 2rem;
   background: #093a3a;
   border-radius: 2rem;
 }
 
 .question h3 {
-  display: block;
   color: var(--color-main);
   font-size: 3rem;
 }
 
 .graph {
-  height: 300px;
-  width: 100%;
-  padding: 2rem;
-  margin-bottom: 4rem;
-  margin: 2rem;
-  background: var(--color-main);
+  
+  width: 40%;
+  aspect-ratio: 2;
+  padding: 5rem;
+  margin: auto;
+  border-radius: 25%;
+  background: var(--color-light);
   color: var(--color-dark);
   
 }
 
 .graph-box {
+  display: flex;
   padding-bottom: 4rem;
-  display: flex;
-
-}
-
-#myChart {
-  display: flex;
+  padding-top: 4rem;
 }
 
 
+
+.chart-type {
+  display: inline-block;
+  height: fit-content;
+  margin: 4rem;
+  background-color: #093a3a;
+}
+
+.switch-btn {
+  color: var(--color-main);
+}
+
+
+.profile__poll {
+  margin: 2rem;
+  margin-top: 4rem;
+  padding: 2rem;
+  background: var(--color-main);
+  color: #093a3a;
+  border-radius: 2rem;
+  display: flex;
+  justify-content: space-between;
+
+  
+}
+
+.profile__pollLeft, .profile__pollRight {
+  display: flex;
+  column-gap: 1em;
+}
+
+.profile__poll svg {
+  width: 1.6rem;
+  height: 1.6rem;
+  fill: var(--color-dark);
+}
+
+.profile__poll h3 {
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--color-dark);
+}

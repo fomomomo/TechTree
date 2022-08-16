@@ -216,7 +216,14 @@ def poll(request, pk):
         poll = Poll.objects.get(room=room)
         print(poll.question)
         options = poll.option_set.all()
-        print(poll.completed)
+        # [print(option.text)for option in  options]
+        labels = [option.text for option in options]
+        vote_counts = [option.user_selections.count() for option in options]
+        print(labels)
+        print(vote_counts)
+        
+        
+        
         if poll.time_end <= datetime.now().replace(tzinfo=timezone.utc):
             if(poll.completed==False):
                 poll.completed = True
@@ -226,7 +233,7 @@ def poll(request, pk):
     except:
         poll = {}
         options = {}
-    return render(request, 'base/poll.html', {'poll': poll, 'options': options, 'time_left': time_left})
+    return render(request, 'base/poll.html', {'poll':poll, 'labels':labels, 'vote_counts':vote_counts, 'time_left': time_left})
 
 @login_required(login_url='login')
 def createPoll(request, pk):

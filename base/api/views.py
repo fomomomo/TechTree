@@ -1,7 +1,7 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from base.models import Room
-from .serializers import RoomSerializer
+from base.models import Room, Poll
+from .serializers import RoomSerializer, OptionSerializer
 from base.api import serializers
 
 
@@ -26,4 +26,12 @@ def getRooms(request):
 def getRoom(request, pk):
     room = Room.objects.get(id=pk)
     serializer = RoomSerializer(room, many=False)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def getOptions(request, pk):
+    room = Room.objects.get(id=pk)
+    poll = Poll.objects.get(room=room)
+    options = poll.option_set.all()
+    serializer = OptionSerializer(options, many=True)
     return Response(serializer.data)
