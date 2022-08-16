@@ -21,6 +21,10 @@ urlpatterns = [
     path('activity/', views.activityPage, name="activity"),
 
     path('poll/<str:pk>/', views.poll, name="poll"),
-    path('create-poll/<str:pk>', views.createPoll, name="create-poll"),
-    path('create-option/<str:pk>', views.createOption, name="create-option"),
+    path('create-poll/<str:pk>/', views.createPoll, name="create-poll"),
+    path('create-option/<str:pk>/', views.createOption, name="create-option"),
+
+    path('vote/<str:pk>/', views.votePage, name='vote'),
+    path('voted-already/<str:pk>/', views.votedAlready, name='voted-already'),
+
 ]

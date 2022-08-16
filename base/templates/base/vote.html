@@ -20,17 +20,21 @@
               ></path>
             </svg>
           </a>
-          <h3>Add Option to your Poll</h3>
+          <h3>Cast/Edit your Vote</h3>
         </div>
       </div>
       <div class="layout__body">
         <form class="form" action="" method="POST">
           {% csrf_token %}
 
-            <div class="form__group">
-              <label for="question">Type your Option</label>
-              {{form.text}}
-            </div>
+          <div class="form__group">
+            <label for="option">Choose your option</label>
+            <select required name="option">
+                {% for option in options %}
+                <option value="{{option.id}}">{{option.text}}</option>
+                {% endfor %}
+            </select>
+          </div>
           <!-- <div class="form__group">
             <label for="room_topic">Topic</label>
             <input required type="text" name="topic" id="room_topic" list="topic-list" />

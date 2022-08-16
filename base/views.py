@@ -266,4 +266,30 @@ def createOption(request, pk):
         return redirect('poll', pk=room.id)
 
     context = {'form': form, 'poll': poll}
-    return render(request, 'base/poll_form.html', context)
+    return render(request, 'base/option_form.html', context)
+
+@login_required(login_url='login')
+def votePage(request, pk):
+    room = Room.objects.get(id=pk)
+    poll = Poll.objects.get(room=room)
+    options = poll.option_set.all()
+    if(request.user in poll.poll_takers.all()):
+        request.session['voted'] = Option.objects.get(user_selections=request.user, question=poll).text
+        return redirect('voted-already', pk=room.id)
+    if request.method == 'POST':
+        if(request.user not in poll.poll_takers.all()):
+            poll.poll_takers.add(request.user)
+            option = Option.objects.get(id=request.POST.get('option'))  
+            option.user_selections.add(request.user)
+        
+            
+        return redirect('room', pk=room.id)
+
+    context = {'poll': poll, 'options': options}
+    return render(request, 'base/vote.html', context)
+
+def votedAlready(request, pk):
+    room = Room.objects.get(id=pk)
+    poll = Poll.objects.get(room=room)
+    context = {'poll': poll, 'room': room}
+    return render(request, 'base/voted_already.html', context)

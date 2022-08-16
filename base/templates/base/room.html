@@ -75,7 +75,7 @@
             <div class="poll__topRight">
 
               {% if room.has_poll %}
-                <a href="{% url  'poll' room.id %}">Active Poll</a>
+                <a href="{% url  'poll' room.id %}">Poll</a>
                 {% if request.user == room.host %}
                   <a href="{% url 'update-room' room.id %}">
                     <svg enable-background="new 0 0 24 24" height="32" viewBox="0 0 24 24" width="32"

@@ -1203,10 +1203,10 @@ a {
   column-gap: 1em;
   background-color: var(--color-main);
   color: var(--color-dark);
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 2rem;
   font-size: 1.4rem;
   border-radius: 0.8rem;
-  margin: 1rem 0;
+  margin: 1rem 2rem;
 }
 
 .poll__topRight svg {
@@ -1316,4 +1316,8 @@ a {
   font-weight: 800;
   color: var(--color-main);
   padding: 1rem;
+}
+
+.already__voted {
+  font-size: 2rem;
 }

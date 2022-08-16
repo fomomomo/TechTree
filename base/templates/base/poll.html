@@ -23,7 +23,7 @@
                 <h3>Poll Ended {{poll.time_end|timesince}} ago</h3>
 
                 {% else %}
-                <a href="#">Vote Now</a>
+                <a href="{% url 'vote' poll.room.id %}">Vote Now</a>
                 <h3>Poll Active Till {{poll.time_end}}</h3>
                 {% endif %}
             </div>
