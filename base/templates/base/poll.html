@@ -43,8 +43,8 @@
                 <canvas id="myChart" data-room_id={{poll.room.id}} data-vote_counts='{{vote_counts}}' data-labels='{{labels}}' width="400" height="400"></canvas>
             </div>
             <div class="chart-type">
-                <button onclick="toggleType()" class="switch-btn btn">
-                    Swtich Chart
+                <button onclick="toggleChart()" class="switch-btn btn">
+                    Toggle Chart
                 </button>
             </div>
 
@@ -57,69 +57,88 @@
 
 <script>
 
+var canvas = document.getElementById('myChart')
+var ctx = canvas.getContext('2d');
+var chartType = 'bar';
+var myBarChart;
+
+
+
     
+let getPoll = async (type) => {
+    var room_id = canvas.dataset.room_id
+    let response = await fetch(`http://127.0.0.1:8000/api/polls/${room_id}`)
+    let options = await response.json()
     
+    var labels = [];
+    var votes = [];
+    for (let i = 0; options.length > i; i++) {
+        // let option = option[i]
+        labels.push(options[i].text)
+        votes.push(options[i].user_selections.length)
+    }
+    init(labels, votes);
     
-    
-    let getPoll = async (type) => {
-        var dataChart = document.getElementById('myChart')
-        var room_id = dataChart.dataset.room_id
-        console.log(room_id)
-        let response = await fetch(`http://127.0.0.1:8000/api/polls/${room_id}`)
-        let options = await response.json()
-        
-        var labels = []
-        var votes = []
-        for (let i = 0; options.length > i; i++) {
-            // let option = option[i]
-            labels.push(options[i].text)
-            votes.push(options[i].user_selections.length)
-        }
-        console.log(labels)
-        console.log(votes)
-        const ctx = document.getElementById('myChart').getContext('2d');
-        const myChart = new Chart(ctx, {
-            type: 'doughnut',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: '# of Votes',
-                    data: votes,
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
+}
+getPoll();
+
+
+
+function init(labels, votes) {
+    myBarChart = new Chart(ctx, {
+        type: chartType,
+        data: {
+            labels: labels,
+            datasets: [{
+                label: '# of Votes',
+                data: votes,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
                 }]
             },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
+            title: {
+                fontSize: 18,
+                display: true,
+                text: 'Poll Results',
+                position: 'bottom'
             }
-        });
-    }
-    getPoll();
-    console.log(myChart)
-    // function myFunction() {
-    //     var element = document.getElementById("myDIV");
-    //     element.classList.toggle("mystyle");
-    // }
+        }
+    });
+}
 
+
+
+function toggleChart() {
+  //destroy chart:
+  myBarChart.destroy();
+  //change chart type: 
+  this.chartType = (this.chartType == 'bar') ? 'doughnut' : 'bar';
+  //restart chart:
+  getPoll();
+}
     
     </script>
 
