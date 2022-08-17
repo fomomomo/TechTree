@@ -80,8 +80,12 @@ def home(request):
         Q(room__topic__name__icontains=q))[0:3]
     leaf_counts = sum([len(topic.room_set.all()) for topic in Topic.objects.all()])
 
+    active_polls = Poll.objects.filter(completed=False).order_by('-time_end')
+    active_polls_count = active_polls.count()
+    active_polls = active_polls[0:3]
+    print(active_polls)
     context = {'rooms': rooms, 'topics': topics,
-               'room_count': room_count, 'room_messages': room_messages, 'leaf_counts': leaf_counts}
+               'room_count': room_count, 'room_messages': room_messages, 'active_polls': active_polls, 'leaf_counts': leaf_counts, 'active_polls_count': active_polls_count}
     return render(request, 'base/home.html', context)
 
 
@@ -207,6 +211,11 @@ def activityPage(request):
     room_messages = Message.objects.all()
     return render(request, 'base/activity.html', {'room_messages': room_messages})
 
+def allPolls(request):
+    all_polls = Poll.objects.all()
+    all_active_polls = Poll.objects.filter(completed=False).order_by('-time_end')
+    return render(request, 'base/polls_all.html', {'all_polls': all_polls, 'all_active_polls': all_active_polls})
+
 
 def poll(request, pk):
     
@@ -283,7 +292,7 @@ def votePage(request, pk):
             option.user_selections.add(request.user)
         
             
-        return redirect('room', pk=room.id)
+        return redirect('poll', pk=room.id)
 
     context = {'poll': poll, 'options': options}
     return render(request, 'base/vote.html', context)

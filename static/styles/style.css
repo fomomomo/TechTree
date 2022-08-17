@@ -293,15 +293,30 @@ a {
   align-items: center;
 }
 
+.header__logo__text {
+  display: flex;
+  gap: 1rem;
+  background-color: var(--color-main);
+  padding: 1rem;
+  border-radius: 15px;
+}
+
 .header__logo > img {
   height: 6rem;
   width: 6rem;
 }
 
-.header__logo > h1 {
+.header__logo__text > h1 {
   font-weight: 700;
   font-size: 2rem;
-  color: var(--color-light);
+  color: var(--color-bg);
+}
+
+.header__logo__text > span {
+  font-weight: 500;
+  font-size: 1.5rem;
+  color: #2c7574;
+  margin: auto;
 }
 
 .header__search > label {
@@ -331,7 +346,15 @@ a {
 .header__search input::placeholder {
   color: var(--color-light-gray);
 }
+@media screen and (max-width: 1027px) {
+  .header__logo__text span {
+    display: none;
+  }
 
+  .header > .container {
+    gap: 3rem;
+  }
+}
 @media screen and (max-width: 800px) {
   .header__search input {
     width: 20rem;
@@ -343,13 +366,16 @@ a {
 }
 
 @media screen and (max-width: 700px) {
-  .header__logo h1 {
+  .header__logo__text {
+    display: none;
+  }
+  .header__logo h1, span {
     display: none;
   }
 }
 
 @media screen and (max-width: 500px) {
-  .header__search {
+  .header__search, .header__logo__text {
     display: none;
   }
 }
@@ -440,10 +466,11 @@ a {
   width: 90%;
   max-width: 48rem;
   min-height: 40rem;
-  position: absolute;
+  /* position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -46%);
+  transform: translate(-50%, -46%); */
+  margin: auto;
   background-color: var(--color-dark);
   border-radius: 1rem;
   box-shadow: 1px 1px 6px 3px rgba(0, 0, 0, 0.1);
@@ -480,7 +507,8 @@ a {
 
 @media screen and (max-width: 900px) {
   .activities,
-  .topics {
+  .topics,
+  .polling {
     display: none;
   }
 
@@ -588,6 +616,7 @@ a {
 .topics__list li a {
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
   margin-bottom: 3rem;
   font-weight: 500;
   color: var(--color-light-gray);
@@ -599,14 +628,17 @@ a {
   color: var(--color-main);
 }
 
-.topics__list li a span {
+.topics__list li a span{
   padding: 0.5rem 1rem;
   background-color: var(--color-dark);
-  border-radius: 3px;
+  border-radius: 50%;
   font-size: 1.3rem;
   font-weight: 700;
   letter-spacing: 1px;
 }
+
+
+
 
 .topics-page a:hover {
   text-decoration: underline;
@@ -1320,4 +1352,29 @@ a {
 
 .already__voted {
   font-size: 2rem;
+}
+
+
+.polling__box {
+  margin: 1.5rem 1.5rem 1.5rem 0rem ;
+  padding: 1.5rem;
+  border: 2px solid var(--color-main);
+  background-color: #568a89;
+  color: #163624;
+  border-radius: 5px;
+}
+
+.polling__box a {
+  color: #163624;
+}
+
+#voted, #voted__all{
+  background-color: #E9DAC1;
+  color: #163624;
+  padding: 0.5rem 1rem;
+  border-radius: 3px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  display: inline;
+  margin-top: 0.5rem;
 }

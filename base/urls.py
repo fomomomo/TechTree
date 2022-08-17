@@ -19,6 +19,7 @@ urlpatterns = [
 
     path('topics/', views.topicsPage, name="topics"),
     path('activity/', views.activityPage, name="activity"),
+    path('all-polls/', views.allPolls, name='all-polls'),
 
     path('poll/<str:pk>/', views.poll, name="poll"),
     path('create-poll/<str:pk>/', views.createPoll, name="create-poll"),
