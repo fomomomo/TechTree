@@ -1378,3 +1378,35 @@ a {
   display: inline;
   margin-top: 0.5rem;
 }
+
+@media screen and (max-width: 500px) {
+  .profile__poll, .question, .graph-box {
+    display: block;
+    text-align: center;
+  }
+  .profile__pollRight {
+    display: block;
+    margin-top: 2rem;
+  }
+  .graph {
+    
+    width: 90%;
+  }
+  @media screen and (max-width: 500px) {
+    .profile__poll, .question, .graph-box {
+      display: block;
+      text-align: center;
+    }
+    .profile__pollRight {
+      display: block;
+      margin-top: 2rem;
+    }
+    .graph {
+      
+      width: 90%;
+    }
+    .layout > .container {
+      display: block;
+    }
+  }
+}
