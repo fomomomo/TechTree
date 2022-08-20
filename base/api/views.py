@@ -10,7 +10,8 @@ def getRoutes(request):
     routes = [
         'GET /api',
         'GET /api/rooms',
-        'GET /api/rooms/:id'
+        'GET /api/rooms/:id',
+        'GET /api/polls/:id',
     ]
     return Response(routes)
 

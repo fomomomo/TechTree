@@ -67,7 +67,7 @@ var myBarChart;
     
 let getPoll = async (type) => {
     var room_id = canvas.dataset.room_id
-    let response = await fetch(`http://127.0.0.1:8000/api/polls/${room_id}`)
+    let response = await fetch(`https://tech-tree-django.herokuapp.com/api/polls/${room_id}`)
     let options = await response.json()
     
     var labels = [];
